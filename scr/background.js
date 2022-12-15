@@ -11,14 +11,12 @@ class Background {
 
 
         this.img = new Image()
-        this.img.scr = "./images/background-forest.jpg"
+        this.img.scr = "images/background-forest.jpg"
     }
 
     draw() {
         this.ctx.drawImage (this.img, this.x, this.y, this.w, this.h)
     }
-
-
 
 }
 
