@@ -8,12 +8,39 @@
     <link href="styles/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <div class="container"></div>
-    <canvas id="game" width="600px" height="450px">
-
-  
+  <div class="container">
+    <div id="welcome">
       
-  <script scr="game.js"></script>
-  <script scr="script.js"></script>
+      <img src="resources/images/metalSlug.png" alt="Metal Slug">
+
+      <div class="buttons">
+        <button id="start-btn">PLAY</button>
+        <button id="control-btn">CONTROLS</button>
+      </div>
+      
+    </div>
+    <div class="secondPage" id="secondPage ">
+      <h1>CONTROLS</h1>
+      <ul>
+        <li>Move to the right</li>
+        <li>Move to the left</li>
+        <li>Bend down</li>
+        <li>Jump</li>
+      </ul>
+    </div>
+
+    <canvas id="game" width="1000px" height="600px">
+  </div>
+  
+
+  <script src="src/background.js"></script>
+  <script src="src/constans.js"></script>
+  <script src="src/bullet.js"></script>
+  <script src="src/bomb.js"></script>
+  <script src="src/diCokka.js"></script>
+  <script src="src/soldier.js"></script>
+  <script src="src/player.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/script.js"></script>
 </body>
 </html>
