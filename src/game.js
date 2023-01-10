@@ -12,24 +12,24 @@ class Game {
     this.bombTick = 60 * 5;
     this.soldierTick = 60 * 5;
     this.diCokkaTick = 60 * 5;
-    this.score = 0
-    this.life = 100
+    this.score = 0;
+    this.life = 100;
 
-    this.audio = new Audio("resources/sounds/03 - Main Theme from Metal Slug (Stage 1).mp3");
+    this.audio = new Audio(
+      "resources/sounds/03 - Main Theme from Metal Slug (Stage 1).mp3"
+    );
     this.audio.volume = 0.3;
 
-    this.gameOverImg = new Image
-    this.gameOverImg.src = "resources/images/gameOver.png"
-
+    this.gameOverImg = new Image();
+    this.gameOverImg.src = "resources/images/gameOver.png";
   }
 
   start() {
-    
     this.stop();
 
     this.interval = setInterval(() => {
       this.gameOver();
-      this.initListeners()
+      this.initListeners();
       this.audio.play();
       this.clear();
       this.clearDiCokka();
@@ -43,39 +43,59 @@ class Game {
       this.addBombs();
       this.drawLife();
       this.drawScore();
-      console.log (this.bombs)
-      console.log (this.soldiers)
+      console.log(this.bombs);
+      console.log(this.soldiers);
     }, 1000 / 60);
   }
 
   addSoldier() {
-    this.soldierTick--;
+    if (this.score <= 100) {
+      this.soldierTick--;
 
-    if (this.soldierTick <= 0) {
-      this.soldierTick = 250 + Math.random() * 60;
-      this.soldiers.push(new Soldier(this.ctx));
+      if (this.soldierTick <= 0) {
+        this.soldierTick = 100 + Math.random() * 60;
+        this.soldiers.push(new Soldier(this.ctx));
+      }
+    }
+
+    if (this.score > 100) {
+      this.soldierTick--;
+      if (this.soldierTick <= 0) {
+        this.soldierTick = 100 + Math.random() * 60;
+        this.soldiers.push(new Soldier(this.ctx));
+      }
     }
   }
 
   addDiCokka() {
-    this.diCokkaTick--;
+    if (this.score > 80) {
+      this.diCokkaTick--;
 
-    if (this.diCokkaTick <= 0) {
-      this.diCokkaTick = 100 + Math.random() * 1000;
-      this.diCokkas.push(new DiCokka(this.ctx));
+      if (this.diCokkaTick <= 0) {
+        this.diCokkaTick = 100 + Math.random() * 1000;
+        this.diCokkas.push(new DiCokka(this.ctx));
+      }
     }
   }
 
   addBombs() {
-    this.bombTick--;
+    if (this.score > 100) {
+      this.bombTick--;
 
-    if (this.bombTick <= 0) {
-      this.bombTick = 100 + Math.random() * 60;
-      this.bombs.push(new Bomb(this.ctx));
+      if (this.bombTick <= 0) {
+        this.bombTick = 100 + Math.random() * 60;
+        this.bombs.push(new Bomb(this.ctx, 1.5));
+      }
+    }
+
+    if (this.score > 150) {
+      this.bombTick--;
+      if (this.bombTick <= 0) {
+        this.bombTick = 100 + Math.random() * 60;
+        this.bombs.push(new Bomb(this.ctx, 3.5));
+      }
     }
   }
-
-  
 
   draw() {
     this.bg.draw();
@@ -83,7 +103,6 @@ class Game {
     this.diCokkas.forEach((diCokka) => diCokka.draw());
     this.soldiers.forEach((soldier) => soldier.draw());
     this.bombs.forEach((bomb) => bomb.draw());
-
   }
 
   move() {
@@ -91,7 +110,7 @@ class Game {
     this.player.move();
     this.soldiers.forEach((soldier) => soldier.move());
     this.diCokkas.forEach((diCokka) => diCokka.move());
-    this.bombs.forEach((bomb) => bomb.move())
+    this.bombs.forEach((bomb) => bomb.move());
   }
 
   clear() {
@@ -116,6 +135,7 @@ class Game {
       const colY = soldier.y + soldier.h >= p.y && soldier.y <= p.y + p.h;
 
       if (colX && colY) {
+        this.life = this.life - 10;
         console.log("colision!");
       }
     });
@@ -125,6 +145,7 @@ class Game {
       const colY = diCokka.y + diCokka.h >= p.y && diCokka.y <= p.y + p.h;
 
       if (colX && colY) {
+        this.life = this.life - 50;
         console.log("colision Dicokka");
       }
     });
@@ -134,13 +155,11 @@ class Game {
       const colY = bomb.y + bomb.h >= p.y && bomb.y <= p.y + p.h;
 
       if (colX && colY) {
-      this.bombCollidesPlayer(bomb)
-      this.life = (this.life - 20)
-      console.log("colision bomb");
+        this.bombCollidesPlayer(bomb);
+        this.life = this.life - 20;
+        console.log("colision bomb");
       }
     });
-
-
   }
 
   checkBulletCollisions() {
@@ -148,7 +167,7 @@ class Game {
       this.soldiers.forEach((soldier) => {
         if (soldier.woundedBullet(bullet)) {
           this.bulletCollidesSoldier(soldier, bullet);
-          this.score = this.score + 20
+          this.score = this.score + 20;
           console.log("colision Soldier!!");
         }
       });
@@ -158,7 +177,7 @@ class Game {
       this.diCokkas.forEach((diCokka) => {
         if (diCokka.woundedBullet(bullet)) {
           this.bulletCollidesDikoka(diCokka, bullet);
-          this.score = this.score + 20
+          this.score = this.score + 20;
           console.log("colision DiCokka Bullet!!");
         }
       });
@@ -175,16 +194,15 @@ class Game {
 
   bulletCollidesDikoka(diCokka, bullet) {
     const diCokkaToppled = this.diCokkas.indexOf(diCokka);
-    this.diCokkas.splice(diCokkaToppled, 1);  
+    this.diCokkas.splice(diCokkaToppled, 1);
 
     const bulletOff = this.player.bullets.indexOf(bullet);
     this.player.bullets.splice(bulletOff, 1);
   }
 
-  bombCollidesPlayer(bomb) { 
+  bombCollidesPlayer(bomb) {
     const exBomb = this.bombs.indexOf(bomb);
     this.bombs.splice(exBomb, 1);
-
   }
 
   clearSoldier() {
@@ -212,16 +230,14 @@ class Game {
     this.ctx.fillStyle = "white";
     this.ctx.font = "20px serif";
     this.ctx.fillText(`Life`, 5, 50);
-
   }
 
   drawScore() {
-    this.ctx.fillStyle = "white"
-    this.ctx.font = "bolder 30px sans-serif"
-    this.ctx.shadowColor = "white"
-    this.ctx.fillText(`Score: ${this.score}`, 10, ctx.canvas.height * 0.95,)
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "bolder 30px sans-serif";
+    this.ctx.shadowColor = "white";
+    this.ctx.fillText(`Score: ${this.score}`, 10, ctx.canvas.height * 0.95);
   }
-
 
   stop() {
     this.audio.play();
@@ -229,22 +245,25 @@ class Game {
   }
 
   gameOver() {
-    if (this.life <= 0 ) {
+    if (this.life <= 0) {
       this.ctx.drawImage(
         this.gameOverImg,
         0,
         0,
         this.ctx.canvas.width,
         this.ctx.canvas.height
-      )
+      );
 
-      this.stop()
+      this.stop();
 
-      
+      const welcome = document.getElementById("welcome");
+      welcome.style.display = "none";
+
+      const controlPage = document.getElementById("secondPage");
+      controlPage.style.display = "none";
+
+      const controlGame = document.getElementById("game-over");
+      controlGame.style.display = "block";
     }
-
-    }
-    
-
-  
+  }
 }

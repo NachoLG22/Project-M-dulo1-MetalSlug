@@ -1,5 +1,5 @@
 class Bomb {
-  constructor(ctx) {
+  constructor(ctx, vy) {
     this.ctx = ctx;
     this.x = Math.floor(Math.random() * (ctx.canvas.width - 0 + 1)) + 0;
     this.y = 0;
@@ -7,7 +7,7 @@ class Bomb {
     this.w = 35;
     this.h = 35;
     this.vx= 0
-    this.vy = 0.4;
+    this.vy = vy;
 
     this.player = new Player(ctx)
     

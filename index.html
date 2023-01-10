@@ -19,14 +19,19 @@
       </div>
       
     </div>
-    <div class="secondPage" id="secondPage ">
+    <div class="secondPage" id="secondPage">
       <h1>CONTROLS</h1>
-      <ul>
-        <li>Move to the right</li>
-        <li>Move to the left</li>
-        <li>Bend down</li>
-        <li>Jump</li>
+      <ul class="button-ul li">
+        <li>Move to the right = RIGH ARROW </li>
+        <li>Move to the left = LEFT ARROW</li>
+        <li>Bend down = DOWN ARROW</li>
+        <li>Jump = SPACE</li>
+        <li>Shoot = A </li>
       </ul>
+      <button id="return-btn">RETURN</button>
+    </div>
+    <div id="game-over">
+      <button id="menu-btn"> MENU </button>
     </div>
 
     <canvas id="game" width="1000px" height="600px">
@@ -35,6 +40,7 @@
 
   <script src="src/background.js"></script>
   <script src="src/constans.js"></script>
+  <script src="src/bulletDiCokka.js"></script>
   <script src="src/bullet.js"></script>
   <script src="src/bomb.js"></script>
   <script src="src/diCokka.js"></script>

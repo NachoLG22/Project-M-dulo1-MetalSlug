@@ -4,9 +4,9 @@ class Player {
 
     this.x = 50;
     this.y = 0;
-    this.y0 = ctx.canvas.height * 0.72
-    this.w = 40;
-    this.h = 75;
+    this.y0 = ctx.canvas.height * 0.7;
+    this.w = 50;
+    this.h = 95;
     this.vx = 0;
     this.vy = 0;
     this.ax = 0;
@@ -34,9 +34,9 @@ class Player {
     this.img.src = "resources/images/playerBend.png";
     this.img.frames = 1;
     this.img.frameIndex = 0;
-    this.w = 40;
-    this.h = 55;
-    this.y0 = ctx.canvas.height * 0.65 + 25;
+    this.w = 50;
+    this.h = 95;
+    this.y0 = ctx.canvas.height * 0.7 + 25;
   }
 
   moveShoot() {
@@ -54,9 +54,9 @@ class Player {
     this.img.src = "resources/images/Marco Rossi.png";
     this.img.frames = 4;
     this.img.frameIndex = 0;
-    this.w = 40;
-    this.h = 75;
-    this.y0 = ctx.canvas.height * 0.65;
+    this.w = 50;
+    this.h = 95;
+    this.y0 = ctx.canvas.height * 0.7;
   }
 
   draw() {
@@ -71,8 +71,6 @@ class Player {
       this.w,
       this.h
     );
-
-    
 
     this.bullets.forEach((b) => b.draw());
 
@@ -94,9 +92,10 @@ class Player {
 
   shoot() {
     const x = this.x + this.w;
-    const y = this.y + this.h * 0.25;
+    const y = this.y + this.h * 0.2;
     const bullet = new Bullet(this.ctx, x, y);
     this.bullets.push(bullet);
+    this.ax = 0;
   }
 
   move() {
