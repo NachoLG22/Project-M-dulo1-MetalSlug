@@ -234,7 +234,7 @@ class Game {
 
   drawScore() {
     this.ctx.fillStyle = "white";
-    this.ctx.font = "bolder 30px sans-serif";
+    this.ctx.font = "bolder 30px Arial";
     this.ctx.shadowColor = "white";
     this.ctx.fillText(`Score: ${this.score}`, 10, ctx.canvas.height * 0.95);
   }

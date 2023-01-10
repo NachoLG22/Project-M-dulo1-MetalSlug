@@ -2,10 +2,10 @@ class Soldier {
   constructor(ctx) {
     this.ctx = ctx;
     this.x = ctx.canvas.width;
-    this.y = ctx.canvas.height * 0.70;
+    this.y = ctx.canvas.height * 0.7;
     this.w = 50;
     this.h = 95;
-    this.vx = -1;
+    this.vx = -1.5;
     this.vy = 0;
     this.ax = 0;
     this.ay = 0.5;
